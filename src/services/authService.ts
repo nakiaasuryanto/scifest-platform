@@ -227,7 +227,7 @@ export class AuthService {
   },
 
   // Get all students who have completed at least one exam
-  async getAllCompletedStudents() {
+  static async getAllCompletedStudents() {
     try {
       const { data: results, error } = await supabase
         .from('exam_results')
