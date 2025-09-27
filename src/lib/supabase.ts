@@ -5,11 +5,16 @@ import type { Student, ExamResult, Question, StudentAnswer } from '../types/data
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
+// Provide fallback values for development/demo purposes
+const defaultUrl = supabaseUrl || 'https://demo.supabase.co'
+const defaultKey = supabaseAnonKey || 'demo-key'
+
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables. Please check your .env.local file.')
+  console.warn('⚠️ Missing Supabase environment variables. Using demo configuration.')
+  console.warn('Please configure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel environment variables.')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(defaultUrl, defaultKey)
 
 // Re-export types for convenience
 export type { Student, ExamResult, Question, StudentAnswer }
