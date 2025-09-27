@@ -107,23 +107,6 @@ function probabilityCorrect(ability: number, difficulty: number, discrimination:
   return 1 / (1 + Math.exp(exponent))
 }
 
-/**
- * Calculate log-likelihood for given ability level
- */
-function logLikelihood(ability: number, responses: IRTResponse[]): number {
-  let logLik = 0
-
-  for (const response of responses) {
-    const prob = probabilityCorrect(ability, response.difficulty, response.discrimination)
-    if (response.is_correct) {
-      logLik += Math.log(prob)
-    } else {
-      logLik += Math.log(1 - prob)
-    }
-  }
-
-  return logLik
-}
 
 /**
  * Estimate ability using maximum likelihood estimation

@@ -152,8 +152,9 @@ export function generateCalibrationReport(
   })
 
   Object.keys(subtestSummary).forEach(subtestId => {
-    const data = subtestSummary[subtestId]
-    subtestSummary[subtestId] = {
+    const subtestIdNumber = parseInt(subtestId)
+    const data = subtestSummary[subtestIdNumber]
+    subtestSummary[subtestIdNumber] = {
       questionCount: data.difficulties.length,
       avgDifficulty: data.difficulties.reduce((sum: number, d: number) => sum + d, 0) / data.difficulties.length,
       avgDiscrimination: data.discriminations.reduce((sum: number, d: number) => sum + d, 0) / data.discriminations.length

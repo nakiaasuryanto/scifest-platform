@@ -237,8 +237,8 @@ export class AuthService {
       if (error) throw error
 
       // Get unique student IDs in the order they first completed an exam
-      const uniqueStudentIds = []
-      const seenStudents = new Set()
+      const uniqueStudentIds: { id: string }[] = []
+      const seenStudents = new Set<string>()
 
       results?.forEach(result => {
         if (!seenStudents.has(result.student_id)) {

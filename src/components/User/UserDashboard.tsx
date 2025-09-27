@@ -80,9 +80,6 @@ const UserDashboard = () => {
     navigate('/login')
   }
 
-  const handleRetakeExam = () => {
-    navigate('/exam-rules')
-  }
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'score-excellent'

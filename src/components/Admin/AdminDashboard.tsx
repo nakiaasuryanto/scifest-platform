@@ -90,7 +90,7 @@ const AdminDashboard = () => {
           setQuestionMessage('✅ Sample questions already exist in database')
         }
       } else {
-        setQuestionMessage(`❌ Error: ${result.error?.message || 'Failed to add questions'}`)
+        setQuestionMessage(`❌ Error: ${(result.error as any)?.message || 'Failed to add questions'}`)
       }
     } catch (error) {
       setQuestionMessage('❌ Error adding sample questions')

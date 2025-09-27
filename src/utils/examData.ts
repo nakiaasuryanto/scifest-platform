@@ -1,4 +1,4 @@
-import { ExamData } from '../types/exam'
+import type { ExamData } from '../types/exam'
 
 export const examData: ExamData = {
   subtests: [
