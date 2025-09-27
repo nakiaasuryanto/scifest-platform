@@ -1,0 +1,74 @@
+/* Copy Protection Styles */
+.copy-protected {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.copy-protected * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Disable right-click context menu */
+.copy-protected {
+  pointer-events: auto;
+}
+
+/* Disable text selection highlighting */
+.copy-protected::selection {
+  background: transparent;
+}
+
+.copy-protected *::selection {
+  background: transparent;
+}
+
+.copy-protected::-moz-selection {
+  background: transparent;
+}
+
+.copy-protected *::-moz-selection {
+  background: transparent;
+}
+
+/* Disable drag functionality */
+.copy-protected {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+.copy-protected * {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+/* Disable print styles for questions */
+@media print {
+  .copy-protected {
+    display: none !important;
+  }
+}
+
+/* Additional protection for images and content */
+.copy-protected img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}

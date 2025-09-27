@@ -1,0 +1,164 @@
+/* Shared Logo Styles */
+
+/* Fixed top logo for exam pages, waiting pages, dashboards */
+.exam-logo-container {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 12px 30px;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.exam-logo-container:hover {
+  transform: translateX(-50%) translateY(2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.exam-logo {
+  max-width: 160px;
+  height: auto;
+  width: auto;
+  transition: all 0.3s ease;
+}
+
+/* Top logo for login and exam rules (full page layouts) */
+.top-logo-container {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 15px 35px;
+  border-radius: 0 0 25px 25px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid rgba(66, 162, 163, 0.1);
+}
+
+.top-logo-container:hover {
+  transform: translateX(-50%) translateY(3px);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+}
+
+.top-logo {
+  max-width: 220px;
+  height: auto;
+  width: auto;
+  transition: all 0.3s ease;
+}
+
+/* Header logo for admin dashboard (inline with content) */
+.header-logo-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-logo {
+  max-width: 180px;
+  height: auto;
+  width: auto;
+  transition: all 0.3s ease;
+}
+
+.header-logo:hover {
+  transform: scale(1.02);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .exam-logo-container {
+    padding: 10px 20px;
+    border-radius: 0 0 15px 15px;
+  }
+
+  .exam-logo {
+    max-width: 140px;
+  }
+
+  .top-logo-container {
+    padding: 12px 25px;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .top-logo {
+    max-width: 180px;
+  }
+
+  .header-logo {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .exam-logo-container {
+    padding: 8px 15px;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .exam-logo {
+    max-width: 120px;
+  }
+
+  .top-logo-container {
+    padding: 10px 20px;
+    border-radius: 0 0 15px 15px;
+  }
+
+  .top-logo {
+    max-width: 150px;
+  }
+
+  .header-logo {
+    max-width: 130px;
+  }
+}
+
+/* Animation for page load */
+@keyframes logoSlideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.exam-logo-container,
+.top-logo-container {
+  animation: logoSlideDown 0.8s ease-out;
+}
+
+/* Gradient reflection effect */
+.exam-logo-container::before,
+.top-logo-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.exam-logo-container:hover::before,
+.top-logo-container:hover::before {
+  opacity: 1;
+}
