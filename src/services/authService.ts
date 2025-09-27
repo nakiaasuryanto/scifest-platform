@@ -224,7 +224,7 @@ export class AuthService {
     } catch (error) {
       return { data: null, error }
     }
-  },
+  }
 
   // Get all students who have completed at least one exam
   static async getAllCompletedStudents() {
