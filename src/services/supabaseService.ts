@@ -243,9 +243,9 @@ export class SupabaseService {
 
       const totalStudents = students?.length || 0
       const completedExams = results?.length || 0
-      const uniqueStudentsWithExams = new Set(results?.map(r => r.student_id)).size
+      const uniqueStudentsWithExams = new Set(results?.map((r: any) => r.student_id)).size
       const averageScore = results?.length > 0
-        ? results.reduce((sum, r) => sum + r.score, 0) / results.length
+        ? results.reduce((sum: number, r: any) => sum + r.score, 0) / results.length
         : 0
 
       return {

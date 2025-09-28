@@ -206,9 +206,9 @@ export class AuthService {
 
       const totalStudents = students?.length || 0
       const completedExams = results?.length || 0
-      const uniqueStudentsWithExams = new Set(results?.map(r => r.student_id)).size
+      const uniqueStudentsWithExams = new Set(results?.map((r: any) => r.student_id)).size
       const averageScore = results?.length > 0
-        ? results.reduce((sum, r) => sum + r.score, 0) / results.length
+        ? results.reduce((sum: number, r: any) => sum + r.score, 0) / results.length
         : 0
 
       return {
@@ -240,7 +240,7 @@ export class AuthService {
       const uniqueStudentIds: { id: string }[] = []
       const seenStudents = new Set<string>()
 
-      results?.forEach(result => {
+      results?.forEach((result: any) => {
         if (!seenStudents.has(result.student_id)) {
           seenStudents.add(result.student_id)
           uniqueStudentIds.push({ id: result.student_id })

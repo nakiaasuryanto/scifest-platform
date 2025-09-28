@@ -18,6 +18,9 @@ const isValidUrl = (url: string) => {
 // Check if credentials are properly configured
 const hasValidCredentials = supabaseUrl && supabaseAnonKey && isValidUrl(supabaseUrl) && supabaseAnonKey.length > 10
 
+let finalUrl: string
+let finalKey: string
+
 if (!hasValidCredentials) {
   console.warn('⚠️ Invalid or missing Supabase environment variables.')
   console.warn('VITE_SUPABASE_URL:', supabaseUrl ? 'Present but invalid format' : 'Missing')
@@ -25,13 +28,14 @@ if (!hasValidCredentials) {
   console.warn('Please configure valid credentials in Vercel environment variables.')
 
   // Use safe fallback values that won't cause errors
-  const safeUrl = 'https://placeholder.supabase.co'
-  const safeKey = 'placeholder-key-for-demo-purposes-only'
-
-  export const supabase = createClient(safeUrl, safeKey)
+  finalUrl = 'https://placeholder.supabase.co'
+  finalKey = 'placeholder-key-for-demo-purposes-only'
 } else {
-  export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+  finalUrl = supabaseUrl
+  finalKey = supabaseAnonKey
 }
+
+export const supabase = createClient(finalUrl, finalKey)
 
 // Re-export types for convenience
 export type { Student, ExamResult, Question, StudentAnswer }
