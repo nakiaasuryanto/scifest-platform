@@ -10,8 +10,20 @@ import SetupRequired from './components/SetupRequired'
 import './App.css'
 
 function App() {
-  // Check if environment variables are configured
-  const isConfigured = import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY
+  // Check if environment variables are configured properly
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+  const isValidUrl = (url: string) => {
+    try {
+      new URL(url)
+      return url.startsWith('https://') && url.includes('.supabase.co')
+    } catch {
+      return false
+    }
+  }
+
+  const isConfigured = supabaseUrl && supabaseAnonKey && isValidUrl(supabaseUrl) && supabaseAnonKey.length > 10
 
   if (!isConfigured) {
     return <SetupRequired />

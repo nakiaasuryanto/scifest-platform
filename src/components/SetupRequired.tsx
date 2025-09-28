@@ -44,9 +44,17 @@ const SetupRequired = () => {
         }}>
           <h3 style={{ marginTop: '0', color: '#495057' }}>Required Environment Variables:</h3>
           <ul style={{ margin: '0', paddingLeft: '20px', color: '#6c757d' }}>
-            <li><code>VITE_SUPABASE_URL</code> - Your Supabase project URL</li>
-            <li><code>VITE_SUPABASE_ANON_KEY</code> - Your Supabase anonymous key</li>
+            <li><code>VITE_SUPABASE_URL</code> - Your Supabase project URL (format: https://xxxxx.supabase.co)</li>
+            <li><code>VITE_SUPABASE_ANON_KEY</code> - Your Supabase anonymous key (starts with eyJ...)</li>
           </ul>
+          <div style={{ marginTop: '15px', padding: '10px', backgroundColor: '#fff3cd', border: '1px solid #ffeaa7', borderRadius: '4px' }}>
+            <strong>⚠️ Common Issues:</strong>
+            <ul style={{ margin: '5px 0 0 0', paddingLeft: '20px', fontSize: '14px' }}>
+              <li>URL must start with <code>https://</code> and end with <code>.supabase.co</code></li>
+              <li>Key must be the full anonymous key (not the service key)</li>
+              <li>Variable names must be exact: <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code></li>
+            </ul>
+          </div>
         </div>
 
         <div style={{
