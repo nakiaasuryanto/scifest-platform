@@ -129,7 +129,7 @@ export class AuthService {
     }
   }
 
-  static async saveExamResult(examResult: Omit<ExamResult, 'id' | 'created_at'>) {
+  static async saveExamResult(examResult: Omit<ExamResult, 'id' | 'created_at' | 'completed_at'>) {
     try {
       console.log('💾 Attempting to save exam result:', examResult)
 
