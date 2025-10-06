@@ -91,7 +91,7 @@ const UserDashboard = () => {
   const getIRTScores = () => {
     if (examResults.length === 0) return { totalScore: 0, averageScore: 0, percentile: 0 }
 
-    // Get best result for each subtest and calculate IRT scores
+    // Get best result for each subtest
     const bestResults = new Map()
     examResults.forEach(result => {
       const currentBest = bestResults.get(result.subtest_id)
@@ -102,23 +102,16 @@ const UserDashboard = () => {
 
     if (bestResults.size === 0) return { totalScore: 0, averageScore: 0, percentile: 0 }
 
-    // Calculate IRT scores for each subtest
-    const subtestIRTScores = Array.from(bestResults.values()).map(result => {
-      // Convert answers to IRT format
-      const responses = result.answers.map((answer: any, index: number) => ({
-        question_id: index + 1,
-        is_correct: answer.is_correct
-      }))
+    // Sum all subtest scores and divide by 7
+    const sumOfScores = Array.from(bestResults.values()).reduce((sum, result) => sum + result.score, 0)
+    const totalScore = Math.round(sumOfScores / 7)
+    const averageScore = totalScore
 
-      const irtResult = calculateIRTScore(result.subtest_id, responses)
-      return {
-        subtestId: result.subtest_id,
-        irtScore: irtResult.irtScore
-      }
-    })
-
-    // Calculate overall IRT score
-    return calculateOverallIRTScore(subtestIRTScores)
+    return {
+      totalScore,
+      averageScore,
+      percentile: 0 // Not using percentile anymore
+    }
   }
 
   const getCompletionStatus = () => {
@@ -197,12 +190,12 @@ const UserDashboard = () => {
               </p>
               <div className="calibration-progress">
                 <div className="progress-info">
-                  <span>Progress Kalibrasi: {systemStatus.totalStudentsCompleted}/20 peserta</span>
+                  <span>Progress Kalibrasi: {systemStatus.totalStudentsCompleted}/5 peserta</span>
                 </div>
                 <div className="progress-bar">
                   <div
                     className="progress-fill"
-                    style={{ width: `${Math.min(100, (systemStatus.totalStudentsCompleted / 20) * 100)}%` }}
+                    style={{ width: `${Math.min(100, (systemStatus.totalStudentsCompleted / 5) * 100)}%` }}
                   ></div>
                 </div>
               </div>
@@ -317,8 +310,8 @@ const UserDashboard = () => {
 
                     {bestResult ? (
                       <div className="result-details">
-                        <div className={`score-badge ${getScoreColor((calculateIRTScore(parseInt(subtestId), bestResult.answers.map((answer: any, index: number) => ({ question_id: index + 1, is_correct: answer.is_correct }))).irtScore - 200) / 6)}`}>
-                          {calculateIRTScore(parseInt(subtestId), bestResult.answers.map((answer: any, index: number) => ({ question_id: index + 1, is_correct: answer.is_correct }))).irtScore}
+                        <div className={`score-badge ${getScoreColor(bestResult.score / 10)}`}>
+                          {bestResult.score}/1000
                         </div>
                         <div className="result-stats">
                           <div className="stat">

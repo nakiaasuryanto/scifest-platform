@@ -20,15 +20,15 @@ export interface StudentScoringStatus {
  * Check if scoring calibration is complete
  */
 export function isCalibrationComplete(totalStudentsCompleted: number): boolean {
-  return totalStudentsCompleted >= 20
+  return totalStudentsCompleted >= 5
 }
 
 /**
- * Check if a student is part of the pilot group (first 20)
+ * Check if a student is part of the pilot group (first 5)
  */
 export function isPilotStudent(studentId: string, allStudentIds: string[]): boolean {
   const sortedStudentIds = [...allStudentIds].sort()
-  const pilotGroup = sortedStudentIds.slice(0, 20)
+  const pilotGroup = sortedStudentIds.slice(0, 5)
   return pilotGroup.includes(studentId)
 }
 
@@ -64,8 +64,8 @@ export function getSystemScoringStatus(allCompletedStudentIds: string[]): Scorin
   return {
     isCalibrationComplete: isComplete,
     totalStudentsCompleted: totalCompleted,
-    calibrationThreshold: 20,
-    pilotStudentIds: sortedIds.slice(0, 20),
+    calibrationThreshold: 5,
+    pilotStudentIds: sortedIds.slice(0, 5),
     calibrationCompletedAt: isComplete ? new Date() : undefined
   }
 }
@@ -88,7 +88,7 @@ export function shouldDisplayScores(
  */
 export function getCalibrationWaitingMessage(
   totalCompleted: number,
-  threshold: number = 20
+  threshold: number = 5
 ): string {
   const remaining = Math.max(0, threshold - totalCompleted)
 
@@ -109,7 +109,7 @@ export function getCalibrationSummary(allCompletedStudentIds: string[]): {
   canRunCalibration: boolean
 } {
   const total = allCompletedStudentIds.length
-  const threshold = 20
+  const threshold = 5
 
   if (total < threshold) {
     return {

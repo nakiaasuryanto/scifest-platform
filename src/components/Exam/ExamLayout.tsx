@@ -170,14 +170,18 @@ const ExamLayout = () => {
 
   const handleSubmitSubtest = async () => {
     try {
-      // Calculate score
+      // Calculate score - each question has equal points
       const correctAnswers = questions.filter((question, index) => {
         const questionKey = `${examState.currentSubtest}-${index}`
         const selectedAnswer = examState.answers[questionKey]
         return selectedAnswer !== undefined && selectedAnswer === question.correct_answer
       }).length
 
-      const score = questions.length > 0 ? (correctAnswers / questions.length) : 0
+      // Calculate score: 1000 points / total questions in this subtest
+      const pointsPerQuestion = questions.length > 0 ? (1000 / questions.length) : 0
+      const rawScore = correctAnswers * pointsPerQuestion
+      // Round to nearest integer (>0.5 rounds up)
+      const score = Math.round(rawScore)
       const wrongAnswers = questions.length - correctAnswers
 
       // Prepare detailed answers
@@ -200,7 +204,7 @@ const ExamLayout = () => {
           student_id: userId,
           subtest_id: currentSubtestId,
           subtest_name: currentSubtest.name,
-          score: Math.round(score * 100),
+          score: score, // Already rounded score out of 1000
           total_questions: questions.length,
           correct_answers: correctAnswers,
           wrong_answers: wrongAnswers,
