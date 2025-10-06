@@ -578,64 +578,196 @@
 
 /* Pembahasan Section */
 .pembahasan-section {
+  margin-top: 30px;
   margin-bottom: 30px;
 }
 
-.pembahasan-card {
-  background: white;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+.pembahasan-card-heboh {
+  background: linear-gradient(135deg, #fff5f5, #fffbf0, #f0f8ff);
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(255, 107, 53, 0.2);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid;
+  border-image: linear-gradient(135deg, var(--primary-teal), var(--primary-orange), var(--primary-red)) 1;
+  animation: borderGlow 3s ease-in-out infinite;
 }
 
-.pembahasan-header {
+@keyframes borderGlow {
+  0%, 100% {
+    box-shadow: 0 8px 30px rgba(255, 107, 53, 0.2);
+  }
+  50% {
+    box-shadow: 0 8px 40px rgba(255, 107, 53, 0.4);
+  }
+}
+
+.pembahasan-sparkles {
+  font-size: 32px;
+  margin-bottom: 15px;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.pembahasan-sparkles.bottom {
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+    opacity: 0.8;
+  }
+}
+
+.pembahasan-header-heboh {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 15px;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-.pembahasan-icon {
-  font-size: 32px;
+.pembahasan-icon-heboh {
+  font-size: 40px;
+  animation: bounce 1.5s ease-in-out infinite;
 }
 
-.pembahasan-header h3 {
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.pembahasan-header-heboh h3 {
   margin: 0;
-  color: var(--primary-teal);
-  font-size: 24px;
+  background: linear-gradient(135deg, var(--primary-teal), var(--primary-orange), var(--primary-red));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.special-event-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #d97706;
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-size: 14px;
   font-weight: 700;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  animation: pulse 2s ease-in-out infinite;
 }
 
-.pembahasan-description {
-  color: #666;
+.star-icon {
   font-size: 16px;
-  line-height: 1.6;
-  margin: 15px 0 25px 0;
+  animation: rotate 3s linear infinite;
 }
 
-.pembahasan-btn {
-  background: #e9ecef;
-  color: #6c757d;
-  border: none;
-  padding: 14px 32px;
-  border-radius: 12px;
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.pembahasan-announcement {
+  color: #333;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+.highlight-text {
+  color: var(--primary-red);
+  font-weight: 800;
+  font-size: 24px;
+  text-shadow: 0 2px 4px rgba(255, 107, 53, 0.3);
+}
+
+.talkshow-banner {
+  background: linear-gradient(135deg, var(--primary-teal), var(--primary-orange));
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.banner-decoration {
+  font-size: 36px;
+  animation: swing 2s ease-in-out infinite;
+}
+
+@keyframes swing {
+  0%, 100% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+}
+
+.talkshow-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.talkshow-title {
+  color: white;
   font-size: 16px;
   font-weight: 600;
-  cursor: not-allowed;
-  transition: all 0.3s ease;
+  letter-spacing: 1px;
 }
 
-.pembahasan-btn:not(:disabled) {
-  background: linear-gradient(135deg, var(--primary-teal), var(--primary-orange));
-  color: white;
-  cursor: pointer;
+.guest-name {
+  color: #ffd700;
+  font-size: 24px;
+  font-weight: 800;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
 }
 
-.pembahasan-btn:not(:disabled):hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+.stay-tuned {
+  color: var(--primary-orange);
+  font-size: 18px;
+  font-weight: 700;
+  margin: 15px 0 0 0;
+  animation: pulse 2s ease-in-out infinite;
 }
 
 /* Responsive adjustments */
@@ -644,15 +776,37 @@
     font-size: 36px;
   }
 
-  .pembahasan-card {
-    padding: 20px;
+  .pembahasan-card-heboh {
+    padding: 30px 20px;
   }
 
-  .pembahasan-header h3 {
+  .pembahasan-header-heboh h3 {
+    font-size: 22px;
+  }
+
+  .pembahasan-announcement {
+    font-size: 16px;
+  }
+
+  .highlight-text {
     font-size: 20px;
   }
 
-  .pembahasan-description {
-    font-size: 14px;
+  .talkshow-banner {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .banner-decoration {
+    font-size: 28px;
+  }
+
+  .guest-name {
+    font-size: 20px;
+  }
+
+  .stay-tuned {
+    font-size: 16px;
   }
 }

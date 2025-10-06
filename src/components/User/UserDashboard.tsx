@@ -177,22 +177,6 @@ const UserDashboard = () => {
           </div>
         </div>
 
-        {/* Pembahasan Section */}
-        <div className="pembahasan-section">
-          <div className="pembahasan-card">
-            <div className="pembahasan-header">
-              <div className="pembahasan-icon">📚</div>
-              <h3>Pembahasan Soal</h3>
-            </div>
-            <p className="pembahasan-description">
-              Pembahasan lengkap untuk semua soal akan tersedia setelah periode ujian berakhir.
-            </p>
-            <button className="pembahasan-btn" disabled>
-              Pembahasan Belum Tersedia
-            </button>
-          </div>
-        </div>
-
         <div className="results-section">
           <h2>Hasil Detail Per Subtest</h2>
 
@@ -253,6 +237,36 @@ const UserDashboard = () => {
               })}
             </div>
           )}
+        </div>
+
+        {/* Pembahasan Section - Below Results */}
+        <div className="pembahasan-section">
+          <div className="pembahasan-card-heboh">
+            <div className="pembahasan-sparkles">✨</div>
+            <div className="pembahasan-header-heboh">
+              <div className="pembahasan-icon-heboh">🎉</div>
+              <h3>PEMBAHASAN SOAL</h3>
+              <div className="pembahasan-icon-heboh">🎉</div>
+            </div>
+            <div className="special-event-badge">
+              <span className="star-icon">⭐</span>
+              SPECIAL EVENT
+              <span className="star-icon">⭐</span>
+            </div>
+            <p className="pembahasan-announcement">
+              Akan dishare <span className="highlight-text">H+5</span> setelah
+            </p>
+            <div className="talkshow-banner">
+              <div className="banner-decoration">🎤</div>
+              <div className="talkshow-text">
+                <span className="talkshow-title">TALKSHOW WITH</span>
+                <span className="guest-name">SHAKIRA AMIRAH</span>
+              </div>
+              <div className="banner-decoration">🎤</div>
+            </div>
+            <p className="stay-tuned">Stay Tuned! 🚀</p>
+            <div className="pembahasan-sparkles bottom">✨</div>
+          </div>
         </div>
       </div>
     </div>
