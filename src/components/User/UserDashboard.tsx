@@ -161,72 +161,35 @@ const UserDashboard = () => {
           </div>
         </div>
 
-        {/* Subtest Scores Grid */}
-        <div className="scores-section">
-          <h2>Skor Per Subtest</h2>
-
-          {/* First Row: Subtests 1-4 */}
-          <div className="scores-row">
-            {[1, 2, 3, 4].map(subtestId => {
-              const info = subtestInfo[subtestId as keyof typeof subtestInfo]
-              const subtestResults = examResults.filter(r => r.subtest_id === subtestId)
-              const bestResult = subtestResults.length > 0
-                ? subtestResults.reduce((best, current) => current.score > best.score ? current : best)
-                : null
-
-              return (
-                <div key={subtestId} className={`score-card ${bestResult ? 'completed' : 'not-completed'}`}>
-                  <div className="score-card-header">
-                    <div className="subtest-badge">Subtest {subtestId}</div>
-                    <h4>{info.name}</h4>
-                  </div>
-                  <div className="score-value">
-                    {bestResult ? `${bestResult.score}/1000` : '-'}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-
-          {/* Second Row: Subtests 5-7 */}
-          <div className="scores-row">
-            {[5, 6, 7].map(subtestId => {
-              const info = subtestInfo[subtestId as keyof typeof subtestInfo]
-              const subtestResults = examResults.filter(r => r.subtest_id === subtestId)
-              const bestResult = subtestResults.length > 0
-                ? subtestResults.reduce((best, current) => current.score > best.score ? current : best)
-                : null
-
-              return (
-                <div key={subtestId} className={`score-card ${bestResult ? 'completed' : 'not-completed'}`}>
-                  <div className="score-card-header">
-                    <div className="subtest-badge">Subtest {subtestId}</div>
-                    <h4>{info.name}</h4>
-                  </div>
-                  <div className="score-value">
-                    {bestResult ? `${bestResult.score}/1000` : '-'}
-                  </div>
-                </div>
-              )
-            })}
-            {/* Empty placeholder to maintain grid */}
-            <div className="score-card placeholder"></div>
-          </div>
-
-          {/* Third Row: Total Score */}
-          <div className="scores-row total-row">
-            <div className="total-score-card">
-              <div className="total-score-header">
-                <div className="card-icon">🎯</div>
-                <h3>Skor Total</h3>
-              </div>
-              <div className={`total-score-value ${getScoreColor(irtScores.totalScore/10)}`}>
-                {irtScores.totalScore}/1000
-              </div>
-              <div className="score-details">
-                <span>Progress: {completionStatus.completed}/7 subtest</span>
-              </div>
+        {/* Total Score Card */}
+        <div className="total-score-section">
+          <div className="total-score-card">
+            <div className="total-score-header">
+              <div className="card-icon">🎯</div>
+              <h3>Skor Total</h3>
             </div>
+            <div className={`total-score-value ${getScoreColor(irtScores.totalScore/10)}`}>
+              {irtScores.totalScore}/1000
+            </div>
+            <div className="score-details">
+              <span>Progress: {completionStatus.completed}/7 subtest</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Pembahasan Section */}
+        <div className="pembahasan-section">
+          <div className="pembahasan-card">
+            <div className="pembahasan-header">
+              <div className="pembahasan-icon">📚</div>
+              <h3>Pembahasan Soal</h3>
+            </div>
+            <p className="pembahasan-description">
+              Pembahasan lengkap untuk semua soal akan tersedia setelah periode ujian berakhir.
+            </p>
+            <button className="pembahasan-btn" disabled>
+              Pembahasan Belum Tersedia
+            </button>
           </div>
         </div>
 
