@@ -1,7 +1,8 @@
 import type { Question } from '../../types/database'
+import type { RandomizedQuestion } from '../../utils/optionRandomizer'
 
 interface QuestionDisplayProps {
-  question: Question
+  question: Question | RandomizedQuestion
   selectedAnswer?: number
   onAnswerSelect: (optionIndex: number) => void
 }
@@ -22,6 +23,12 @@ const QuestionDisplay = ({ question, selectedAnswer, onAnswerSelect }: QuestionD
     }
   }
 
+  // Determine which options to display (randomized or original)
+  const isRandomized = 'randomized_options' in question
+  const optionsToDisplay = isRandomized
+    ? (question as RandomizedQuestion).randomized_options
+    : question.options
+
   return (
     <div
       className="question-display copy-protected"
@@ -35,7 +42,7 @@ const QuestionDisplay = ({ question, selectedAnswer, onAnswerSelect }: QuestionD
       </div>
 
       <div className="answer-options">
-        {question.options.map((option, index) => (
+        {optionsToDisplay.map((option, index) => (
           <div
             key={index}
             className={`option ${selectedAnswer === index ? 'selected' : ''}`}

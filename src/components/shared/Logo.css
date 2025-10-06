@@ -2,19 +2,19 @@
 
 /* Fixed top logo for exam pages, waiting pages, dashboards */
 .exam-logo-container {
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   padding: 12px 30px;
-  border-radius: 0 0 20px 20px;
+  border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   z-index: 1000;
   transition: all 0.3s ease;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .exam-logo-container:hover {
@@ -31,19 +31,19 @@
 
 /* Top logo for login and exam rules (full page layouts) */
 .top-logo-container {
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   padding: 15px 35px;
-  border-radius: 0 0 25px 25px;
+  border-radius: 25px;
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   transition: all 0.3s ease;
-  border-bottom: 2px solid rgba(66, 162, 163, 0.1);
+  border: 2px solid rgba(66, 162, 163, 0.1);
 }
 
 .top-logo-container:hover {

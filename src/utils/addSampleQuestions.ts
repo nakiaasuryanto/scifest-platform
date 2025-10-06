@@ -6,13 +6,15 @@ const sampleQuestions = [
     subtest_id: 1,
     question_text: 'Semua burung dapat terbang. Pinguin adalah burung. Kesimpulan yang tepat adalah:',
     options: ["Pinguin dapat terbang", "Pinguin tidak dapat terbang", "Semua burung kecuali pinguin dapat terbang", "Pernyataan pertama salah"],
-    correct_answer: 3
+    correct_answer: 3,
+    correct_answer_text: "Pernyataan pertama salah"
   },
   {
     subtest_id: 1,
     question_text: 'Jika A > B dan B > C, maka:',
     options: ["A = C", "A < C", "A > C", "A ≤ C"],
-    correct_answer: 2
+    correct_answer: 2,
+    correct_answer_text: "A > C"
   },
   {
     subtest_id: 1,

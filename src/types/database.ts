@@ -36,7 +36,8 @@ export interface Question {
   subtest_id: number
   question_text: string
   options: string[]
-  correct_answer: number
+  correct_answer: number // Keep for backward compatibility
+  correct_answer_text: string // New: actual correct answer text
   created_at: string
 }
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from '../../assets/Logo.png'
+import '../shared/Logo.css'
 import './ExamCompleted.css'
 
 const ExamCompleted = () => {
