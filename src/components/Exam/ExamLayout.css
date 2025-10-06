@@ -222,6 +222,25 @@
   margin-bottom: 30px;
 }
 
+.question-image {
+  margin: 20px 0;
+  text-align: center;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+}
+
+.question-image img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 8px;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
 .answer-options {
   display: flex;
   flex-direction: column;

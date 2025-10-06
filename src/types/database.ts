@@ -38,6 +38,7 @@ export interface Question {
   options: string[]
   correct_answer: number // Keep for backward compatibility
   correct_answer_text: string // New: actual correct answer text
+  image_url?: string // Optional: URL for question image
   created_at: string
 }
 

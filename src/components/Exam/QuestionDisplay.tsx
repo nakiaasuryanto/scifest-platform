@@ -39,6 +39,18 @@ const QuestionDisplay = ({ question, selectedAnswer, onAnswerSelect }: QuestionD
       <div className="question-text">
         <h3>Soal {question.id}</h3>
         <p>{question.question_text}</p>
+
+        {/* Display image if available */}
+        {question.image_url && (
+          <div className="question-image">
+            <img
+              src={question.image_url}
+              alt="Question illustration"
+              onContextMenu={handleContextMenu}
+              draggable={false}
+            />
+          </div>
+        )}
       </div>
 
       <div className="answer-options">
