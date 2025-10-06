@@ -248,14 +248,14 @@ const UserDashboard = () => {
               <h3>PEMBAHASAN SOAL</h3>
               <div className="pembahasan-icon-heboh">🎉</div>
             </div>
+            <p className="pembahasan-announcement">
+              Akan dishare <span className="highlight-text">H+5</span> setelah
+            </p>
             <div className="special-event-badge">
               <span className="star-icon">⭐</span>
               SPECIAL EVENT
               <span className="star-icon">⭐</span>
             </div>
-            <p className="pembahasan-announcement">
-              Akan dishare <span className="highlight-text">H+5</span> setelah
-            </p>
             <div className="talkshow-banner">
               <div className="banner-decoration">🎤</div>
               <div className="talkshow-text">
@@ -265,7 +265,6 @@ const UserDashboard = () => {
               <div className="banner-decoration">🎤</div>
             </div>
             <p className="stay-tuned">Stay Tuned! 🚀</p>
-            <div className="pembahasan-sparkles bottom">✨</div>
           </div>
         </div>
       </div>
