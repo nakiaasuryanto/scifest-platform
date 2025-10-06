@@ -51,9 +51,17 @@ const ExamLayout = () => {
       window.history.pushState(null, '', window.location.href)
     }
 
-    // Push initial state and set up listener
+    // Prevent page reload/close with confirmation
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = '' // Chrome requires returnValue to be set
+      return '' // Some browsers require a return value
+    }
+
+    // Push initial state and set up listeners
     window.history.pushState(null, '', window.location.href)
     window.addEventListener('popstate', handlePopState)
+    window.addEventListener('beforeunload', handleBeforeUnload)
 
     const loadQuestions = async () => {
       if (!currentSubtest) {
@@ -111,6 +119,7 @@ const ExamLayout = () => {
     return () => {
       isMounted = false
       window.removeEventListener('popstate', handlePopState)
+      window.removeEventListener('beforeunload', handleBeforeUnload)
     }
   }, [currentSubtestId, navigate])
 

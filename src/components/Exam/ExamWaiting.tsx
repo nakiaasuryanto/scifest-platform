@@ -31,9 +31,17 @@ const ExamWaiting = () => {
       window.history.pushState(null, '', window.location.href)
     }
 
-    // Push initial state and set up listener
+    // Prevent page reload/close with confirmation
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = ''
+      return ''
+    }
+
+    // Push initial state and set up listeners
     window.history.pushState(null, '', window.location.href)
     window.addEventListener('popstate', handlePopState)
+    window.addEventListener('beforeunload', handleBeforeUnload)
 
     const timer = setInterval(() => {
       setCountdown(prev => {
@@ -48,6 +56,7 @@ const ExamWaiting = () => {
     return () => {
       clearInterval(timer)
       window.removeEventListener('popstate', handlePopState)
+      window.removeEventListener('beforeunload', handleBeforeUnload)
     }
   }, [navigate, currentSubtestId])
 
