@@ -17,6 +17,7 @@ const ExamLayout = () => {
   const [questions, setQuestions] = useState<Question[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [showExitModal, setShowExitModal] = useState(false)
 
   // Define subtest info with actual durations and question counts
   const subtestInfo = {
@@ -43,8 +44,10 @@ const ExamLayout = () => {
   useEffect(() => {
     let isMounted = true
 
-    // Prevent back navigation
-    const handlePopState = () => {
+    // Prevent back navigation with confirmation
+    const handlePopState = (e: PopStateEvent) => {
+      e.preventDefault()
+      setShowExitModal(true)
       window.history.pushState(null, '', window.location.href)
     }
 
@@ -238,6 +241,19 @@ const ExamLayout = () => {
     handleSubmitSubtest()
   }
 
+  const handleExitConfirm = () => {
+    // Clear user session and navigate to login
+    localStorage.removeItem('isAuthenticated')
+    localStorage.removeItem('userName')
+    localStorage.removeItem('userRole')
+    localStorage.removeItem('userId')
+    navigate('/login')
+  }
+
+  const handleExitCancel = () => {
+    setShowExitModal(false)
+  }
+
   if (loading) {
     return (
       <div className="exam-layout">
@@ -401,6 +417,24 @@ const ExamLayout = () => {
           </div>
         </div>
       </div>
+
+      {/* Exit Confirmation Modal */}
+      {showExitModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Anda yakin meninggalkan ujian?</h3>
+            <p>Jawaban tidak akan tersimpan dan Anda akan logout dari sistem.</p>
+            <div className="modal-buttons">
+              <button className="cancel-btn" onClick={handleExitCancel}>
+                Tidak
+              </button>
+              <button className="confirm-btn" onClick={handleExitConfirm}>
+                Ya, Keluar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
