@@ -252,11 +252,10 @@ const ExamLayout = () => {
           student_id: userId,
           subtest_id: currentSubtestId,
           subtest_name: currentSubtest.name,
-          score: score, // Already rounded score out of 1000
+          score: score, // Score out of 1000
           total_questions: questions.length,
           correct_answers: correctAnswers,
           wrong_answers: wrongAnswers,
-          completed_at: new Date().toISOString(),
           duration: (currentSubtest.duration * 60) - examState.timeRemaining,
           answers: detailedAnswers
         }

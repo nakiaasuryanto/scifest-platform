@@ -229,49 +229,70 @@ const UserDashboard = () => {
           </div>
         </div>
 
-        <div className="summary-cards">
-          <div className="summary-card overall-score">
-            <div className="card-icon">🎯</div>
-            <div className="card-content">
-              <h3>Skor Keseluruhan</h3>
-              <div className={`score-display ${getScoreColor(irtScores.totalScore/10)}`}>
+        {/* Subtest Scores Grid */}
+        <div className="scores-section">
+          <h2>Skor Per Subtest</h2>
+
+          {/* First Row: Subtests 1-4 */}
+          <div className="scores-row">
+            {[1, 2, 3, 4].map(subtestId => {
+              const info = subtestInfo[subtestId as keyof typeof subtestInfo]
+              const subtestResults = examResults.filter(r => r.subtest_id === subtestId)
+              const bestResult = subtestResults.length > 0
+                ? subtestResults.reduce((best, current) => current.score > best.score ? current : best)
+                : null
+
+              return (
+                <div key={subtestId} className={`score-card ${bestResult ? 'completed' : 'not-completed'}`}>
+                  <div className="score-card-header">
+                    <div className="subtest-badge">Subtest {subtestId}</div>
+                    <h4>{info.name}</h4>
+                  </div>
+                  <div className="score-value">
+                    {bestResult ? `${bestResult.score}/1000` : '-'}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Second Row: Subtests 5-7 */}
+          <div className="scores-row">
+            {[5, 6, 7].map(subtestId => {
+              const info = subtestInfo[subtestId as keyof typeof subtestInfo]
+              const subtestResults = examResults.filter(r => r.subtest_id === subtestId)
+              const bestResult = subtestResults.length > 0
+                ? subtestResults.reduce((best, current) => current.score > best.score ? current : best)
+                : null
+
+              return (
+                <div key={subtestId} className={`score-card ${bestResult ? 'completed' : 'not-completed'}`}>
+                  <div className="score-card-header">
+                    <div className="subtest-badge">Subtest {subtestId}</div>
+                    <h4>{info.name}</h4>
+                  </div>
+                  <div className="score-value">
+                    {bestResult ? `${bestResult.score}/1000` : '-'}
+                  </div>
+                </div>
+              )
+            })}
+            {/* Empty placeholder to maintain grid */}
+            <div className="score-card placeholder"></div>
+          </div>
+
+          {/* Third Row: Total Score */}
+          <div className="scores-row total-row">
+            <div className="total-score-card">
+              <div className="total-score-header">
+                <div className="card-icon">🎯</div>
+                <h3>Skor Total</h3>
+              </div>
+              <div className={`total-score-value ${getScoreColor(irtScores.totalScore/10)}`}>
                 {irtScores.totalScore}/1000
               </div>
-            </div>
-          </div>
-
-          <div className="summary-card completion-status">
-            <div className="card-icon">📊</div>
-            <div className="card-content">
-              <h3>Progress Ujian</h3>
-              <div className="progress-display">
-                <span className="progress-text">
-                  {completionStatus.completed} dari {completionStatus.total} subtest
-                </span>
-                <div className="progress-bar">
-                  <div
-                    className="progress-fill"
-                    style={{ width: `${completionStatus.percentage}%` }}
-                  ></div>
-                </div>
-                <span className="progress-percentage">{completionStatus.percentage}%</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="summary-card exam-date">
-            <div className="card-icon">📅</div>
-            <div className="card-content">
-              <h3>Terakhir Dikerjakan</h3>
-              <div className="date-display">
-                {examResults.length > 0
-                  ? new Date(examResults[0].completed_at).toLocaleDateString('id-ID', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric'
-                    })
-                  : 'Belum ada ujian'
-                }
+              <div className="score-details">
+                <span>Progress: {completionStatus.completed}/7 subtest</span>
               </div>
             </div>
           </div>

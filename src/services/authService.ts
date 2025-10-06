@@ -131,18 +131,22 @@ export class AuthService {
 
   static async saveExamResult(examResult: Omit<ExamResult, 'id' | 'created_at'>) {
     try {
+      console.log('💾 Attempting to save exam result:', examResult)
+
       const { data, error } = await supabase
         .from('exam_results')
-        .insert([
-          {
-            ...examResult,
-            created_at: new Date().toISOString()
-          }
-        ])
+        .insert([examResult])
+        .select()
 
-      if (error) throw error
+      if (error) {
+        console.error('❌ Database error:', error)
+        throw error
+      }
+
+      console.log('✅ Exam result saved successfully:', data)
       return { data, error: null }
     } catch (error) {
+      console.error('❌ Exception saving exam result:', error)
       return { data: null, error }
     }
   }
