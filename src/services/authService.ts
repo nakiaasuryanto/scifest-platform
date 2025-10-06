@@ -21,7 +21,7 @@ export class AuthService {
         .from('students')
         .select('id, email, name, role, password, created_at, updated_at')
         .eq('email', email)
-        .single()
+        .limit(1)
 
       console.log('👤 User found:', userCheck)
       console.log('❌ User error:', userError)
@@ -31,25 +31,28 @@ export class AuthService {
         return { user: null, error: 'Database error: ' + userError.message }
       }
 
-      if (!userCheck) {
+      if (!userCheck || userCheck.length === 0) {
         console.log('❌ No user found with email:', email)
         return { user: null, error: 'Invalid email or password' }
       }
 
+      // Get the first user from the array
+      const user = userCheck[0]
+
       // Check if password column exists
-      if (!userCheck.password) {
+      if (!user.password) {
         console.log('❌ Password column is missing or null')
         return { user: null, error: 'Password not set for user' }
       }
 
       // Check password
-      if (userCheck.password !== password) {
-        console.log('❌ Password mismatch. Expected:', userCheck.password, 'Got:', password)
+      if (user.password !== password) {
+        console.log('❌ Password mismatch. Expected:', user.password, 'Got:', password)
         return { user: null, error: 'Invalid email or password' }
       }
 
       console.log('✅ Login successful for:', email)
-      return { user: userCheck, error: null }
+      return { user: user, error: null }
     } catch (error) {
       console.log('💥 Login exception:', error)
       return { user: null, error: 'Login failed: ' + error }
@@ -63,9 +66,9 @@ export class AuthService {
         .from('students')
         .select('email')
         .eq('email', email)
-        .single()
+        .limit(1)
 
-      if (existingUser) {
+      if (existingUser && existingUser.length > 0) {
         return { user: null, error: 'Email already exists' }
       }
 
