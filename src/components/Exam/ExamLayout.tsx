@@ -210,8 +210,7 @@ const ExamLayout = () => {
           wrong_answers: wrongAnswers,
           completed_at: new Date().toISOString(),
           duration: (currentSubtest.duration * 60) - examState.timeRemaining,
-          answers: detailedAnswers,
-          attempt_number: Date.now() // Add unique identifier for multiple attempts
+          answers: detailedAnswers
         }
 
         console.log('💾 Saving exam result:', examResult)
