@@ -44,6 +44,41 @@ const ExamLayout = () => {
   useEffect(() => {
     let isMounted = true
 
+    // Check if student has already completed exam
+    const checkExamStatus = async () => {
+      const userId = localStorage.getItem('userId')
+      if (!userId) {
+        navigate('/login')
+        return false
+      }
+
+      const { data: examResults } = await AuthService.getStudentExamResults(userId)
+
+      // Check if all 7 subtests are completed
+      if (examResults && examResults.length > 0) {
+        const completedSubtests = new Set(examResults.map(result => result.subtest_id))
+        if (completedSubtests.size >= 7) {
+          // All subtests completed, redirect to dashboard
+          navigate('/user-dashboard')
+          return false
+        }
+
+        // Check if this specific subtest is already completed
+        if (completedSubtests.has(currentSubtestId)) {
+          // This subtest already completed, go to next one
+          const nextSubtest = currentSubtestId + 1
+          if (nextSubtest <= 7) {
+            navigate(`/exam-waiting/${nextSubtest}`)
+          } else {
+            navigate('/user-dashboard')
+          }
+          return false
+        }
+      }
+
+      return true
+    }
+
     // Prevent back navigation with confirmation
     const handlePopState = (e: PopStateEvent) => {
       e.preventDefault()
@@ -68,6 +103,10 @@ const ExamLayout = () => {
         navigate('/exam-rules')
         return
       }
+
+      // Check exam status first
+      const canProceed = await checkExamStatus()
+      if (!canProceed) return
 
       setLoading(true)
       setError(null)

@@ -35,6 +35,12 @@ const ExamRules = () => {
   }, [])
 
   const handleStartExam = () => {
+    // Check if already completed before allowing to start
+    if (hasCompletedExam) {
+      alert('Anda sudah menyelesaikan ujian. Silakan lihat hasil di dashboard.')
+      navigate('/user-dashboard')
+      return
+    }
     setShowConfirmModal(true)
   }
 
