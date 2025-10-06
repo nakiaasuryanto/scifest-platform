@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthService } from '../../services/authService'
 import type { ExamResult } from '../../types/database'
-import { shouldDisplayScores, getCalibrationWaitingMessage, getSystemScoringStatus } from '../../utils/scoringStatus'
 import logo from '../../assets/Logo.png'
 import './UserDashboard.css'
 
@@ -10,8 +9,6 @@ const UserDashboard = () => {
   const [examResults, setExamResults] = useState<ExamResult[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [allCompletedStudents, setAllCompletedStudents] = useState<string[]>([])
-  const [showScores, setShowScores] = useState(false)
   const navigate = useNavigate()
 
   const userName = localStorage.getItem('userName') || 'Peserta'
@@ -47,19 +44,6 @@ const UserDashboard = () => {
 
         console.log('📊 Fetched exam results:', results)
         setExamResults(results || [])
-
-        // Get all completed students for calibration status
-        const { data: allStudents, error: studentsError } = await AuthService.getAllCompletedStudents()
-        if (!studentsError && allStudents) {
-          const completedStudentIds = allStudents.map((s: any) => s.id)
-          setAllCompletedStudents(completedStudentIds)
-
-          // Check if this student should see scores
-          if (userId) {
-            const canShowScores = shouldDisplayScores(userId, completedStudentIds)
-            setShowScores(canShowScores)
-          }
-        }
       } catch (err) {
         console.error('💥 Error:', err)
         setError('Failed to load exam results')
@@ -154,59 +138,7 @@ const UserDashboard = () => {
   }
 
   const completionStatus = getCompletionStatus()
-  const irtScores = showScores ? getIRTScores() : { totalScore: 0, averageScore: 0, percentile: 0 }
-  const systemStatus = getSystemScoringStatus(allCompletedStudents)
-
-  // If student has completed exam but scores aren't ready, show waiting message
-  if (examResults.length > 0 && !showScores) {
-    return (
-      <div className="user-dashboard">
-        <div className="exam-logo-container">
-          <img src={logo} alt="Logo" className="exam-logo" />
-        </div>
-
-        <div className="dashboard-content">
-          <div className="dashboard-header">
-            <div className="header-content">
-              <div className="welcome-section">
-                <h1>Dashboard Hasil Ujian</h1>
-                <p className="welcome-text">Selamat datang, <strong>{userName}</strong></p>
-              </div>
-              <div className="header-actions">
-                <button className="logout-btn" onClick={handleLogout}>
-                  Logout
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="calibration-waiting">
-            <div className="waiting-card">
-              <div className="waiting-icon">⏳</div>
-              <h2>Ujian Telah Selesai</h2>
-              <p className="waiting-message">
-                {getCalibrationWaitingMessage(systemStatus.totalStudentsCompleted)}
-              </p>
-              <div className="calibration-progress">
-                <div className="progress-info">
-                  <span>Progress Kalibrasi: {systemStatus.totalStudentsCompleted}/5 peserta</span>
-                </div>
-                <div className="progress-bar">
-                  <div
-                    className="progress-fill"
-                    style={{ width: `${Math.min(100, (systemStatus.totalStudentsCompleted / 5) * 100)}%` }}
-                  ></div>
-                </div>
-              </div>
-              <p className="info-text">
-                Skor akan ditampilkan otomatis setelah sistem kalibrasi selesai.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  const irtScores = getIRTScores()
 
   return (
     <div className="user-dashboard">
