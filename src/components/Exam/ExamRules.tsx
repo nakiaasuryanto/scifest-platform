@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from '../../assets/Logo.png'
 import './ExamRules.css'
+import { SupabaseService } from '../../services/supabaseService'
 
 const ExamRules = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const [hasCompletedExam, setHasCompletedExam] = useState(false)
   const navigate = useNavigate()
 
   const examRules = [
@@ -18,6 +20,19 @@ const ExamRules = () => {
     "Pastikan koneksi internet stabil selama ujian",
     "Dilarang membuka aplikasi lain selama ujian"
   ]
+
+  useEffect(() => {
+    const checkExamStatus = async () => {
+      const userId = localStorage.getItem('userId')
+      if (userId) {
+        const { data } = await SupabaseService.getStudentExamResults(userId)
+        if (data && data.length > 0) {
+          setHasCompletedExam(true)
+        }
+      }
+    }
+    checkExamStatus()
+  }, [])
 
   const handleStartExam = () => {
     setShowConfirmModal(true)
@@ -50,9 +65,11 @@ const ExamRules = () => {
           <div className="header-section">
             <h1>Peraturan Ujian Try Out</h1>
             <div className="header-buttons">
-              <button className="dashboard-btn" onClick={handleViewDashboard}>
-                Lihat Hasil
-              </button>
+              {hasCompletedExam && (
+                <button className="dashboard-btn" onClick={handleViewDashboard}>
+                  Lihat Hasil
+                </button>
+              )}
               <button className="logout-btn" onClick={handleLogout}>
                 Logout
               </button>

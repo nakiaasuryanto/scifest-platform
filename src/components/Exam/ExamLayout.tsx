@@ -43,6 +43,15 @@ const ExamLayout = () => {
   useEffect(() => {
     let isMounted = true
 
+    // Prevent back navigation
+    const handlePopState = () => {
+      window.history.pushState(null, '', window.location.href)
+    }
+
+    // Push initial state and set up listener
+    window.history.pushState(null, '', window.location.href)
+    window.addEventListener('popstate', handlePopState)
+
     const loadQuestions = async () => {
       if (!currentSubtest) {
         navigate('/exam-rules')
@@ -98,6 +107,7 @@ const ExamLayout = () => {
 
     return () => {
       isMounted = false
+      window.removeEventListener('popstate', handlePopState)
     }
   }, [currentSubtestId, navigate])
 

@@ -26,6 +26,15 @@ const ExamWaiting = () => {
   const previousSubtest = subtestInfo[(currentSubtestId - 1) as keyof typeof subtestInfo]
 
   useEffect(() => {
+    // Prevent back navigation
+    const handlePopState = () => {
+      window.history.pushState(null, '', window.location.href)
+    }
+
+    // Push initial state and set up listener
+    window.history.pushState(null, '', window.location.href)
+    window.addEventListener('popstate', handlePopState)
+
     const timer = setInterval(() => {
       setCountdown(prev => {
         if (prev <= 1) {
@@ -36,7 +45,10 @@ const ExamWaiting = () => {
       })
     }, 1000)
 
-    return () => clearInterval(timer)
+    return () => {
+      clearInterval(timer)
+      window.removeEventListener('popstate', handlePopState)
+    }
   }, [navigate, currentSubtestId])
 
   const handleStartNow = () => {

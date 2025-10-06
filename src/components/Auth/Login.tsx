@@ -1,16 +1,14 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthService } from '../../services/authService'
+import { SupabaseService } from '../../services/supabaseService'
 import logo from '../../assets/Logo.png'
 import './Login.css'
 
 const Login = () => {
-  const [isLogin, setIsLogin] = useState(true)
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    name: '',
-    confirmPassword: ''
   })
   const navigate = useNavigate()
 
@@ -25,48 +23,35 @@ const Login = () => {
     e.preventDefault()
 
     try {
-      if (isLogin) {
-        // Handle login with table-based auth
-        const { user, error } = await AuthService.login(formData.email, formData.password)
+      // Handle login with table-based auth
+      const { user, error } = await AuthService.login(formData.email, formData.password)
 
-        if (error || !user) {
-          console.error('Login error:', error)
-          alert(error || 'Invalid email or password!')
-          return
-        }
+      if (error || !user) {
+        console.error('Login error:', error)
+        alert(error || 'Invalid email or password!')
+        return
+      }
 
-        // Store user info in localStorage
-        localStorage.setItem('isAuthenticated', 'true')
-        localStorage.setItem('userName', user.name)
-        localStorage.setItem('userRole', user.role)
-        localStorage.setItem('userId', user.id)
+      // Store user info in localStorage
+      localStorage.setItem('isAuthenticated', 'true')
+      localStorage.setItem('userName', user.name)
+      localStorage.setItem('userRole', user.role)
+      localStorage.setItem('userId', user.id)
 
-        // Redirect based on role
-        if (user.role === 'admin') {
-          navigate('/admin-dashboard')
+      // Redirect based on role
+      if (user.role === 'admin') {
+        navigate('/admin-dashboard')
+      } else {
+        // Check if student has already completed exam
+        const { data: examResults } = await SupabaseService.getStudentExamResults(user.id)
+
+        if (examResults && examResults.length > 0) {
+          // Student has completed exam, redirect to dashboard
+          navigate('/user-dashboard')
         } else {
+          // Student hasn't done exam yet, show exam rules
           navigate('/exam-rules')
         }
-      } else {
-        // Handle signup with table-based auth
-        if (formData.password !== formData.confirmPassword) {
-          alert('Passwords do not match!')
-          return
-        }
-
-        const { user, error } = await AuthService.register(formData.email, formData.password, formData.name)
-
-        if (error || !user) {
-          console.error('Signup error:', error)
-          alert(error || 'Error creating account!')
-          return
-        }
-
-        localStorage.setItem('isAuthenticated', 'true')
-        localStorage.setItem('userName', user.name)
-        localStorage.setItem('userRole', user.role)
-        localStorage.setItem('userId', user.id)
-        navigate('/exam-rules')
       }
     } catch (error) {
       console.error('Unexpected error:', error)
@@ -81,22 +66,8 @@ const Login = () => {
       </div>
       <div className="login-container">
         <div className="login-card">
-        <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
+        <h2>Login</h2>
         <form onSubmit={handleSubmit}>
-          {!isLogin && (
-            <div className="form-group">
-              <label htmlFor="name">Full Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          )}
-
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -121,35 +92,10 @@ const Login = () => {
             />
           </div>
 
-          {!isLogin && (
-            <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          )}
-
           <button type="submit" className="submit-btn">
-            {isLogin ? 'Login' : 'Sign Up'}
+            Login
           </button>
         </form>
-
-        <p className="toggle-text">
-          {isLogin ? "Don't have an account? " : "Already have an account? "}
-          <button
-            type="button"
-            className="toggle-btn"
-            onClick={() => setIsLogin(!isLogin)}
-          >
-            {isLogin ? 'Sign Up' : 'Login'}
-          </button>
-        </p>
       </div>
     </div>
     </>

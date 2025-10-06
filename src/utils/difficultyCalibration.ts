@@ -1,5 +1,5 @@
 // Difficulty Calibration System
-// Uses first 20 students' responses to calculate question difficulties
+// Uses first 5 students' responses to calculate question difficulties
 
 export interface StudentResponse {
   student_id: string
@@ -19,7 +19,7 @@ export interface CalibratedDifficulty {
 }
 
 /**
- * Calculate question difficulty from pilot data (first 20 students)
+ * Calculate question difficulty from pilot data (first 5 students)
  * Uses Classical Test Theory and then converts to IRT parameters
  */
 export function calibrateQuestionDifficulties(
@@ -75,14 +75,14 @@ export function calibrateQuestionDifficulties(
  */
 export function hasSufficientPilotData(responses: StudentResponse[]): boolean {
   const uniqueStudents = new Set(responses.map(r => r.student_id))
-  return uniqueStudents.size >= 20
+  return uniqueStudents.size >= 5
 }
 
 /**
- * Get student IDs of first 20 students (pilot group)
+ * Get student IDs of first 5 students (pilot group)
  */
 export function getPilotStudentIds(allStudentIds: string[]): string[] {
-  return allStudentIds.slice(0, 20)
+  return allStudentIds.slice(0, 5)
 }
 
 /**
