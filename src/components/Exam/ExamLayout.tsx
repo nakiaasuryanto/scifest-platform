@@ -36,7 +36,6 @@ const ExamLayout = () => {
     currentSubtest: currentSubtestId - 1,
     currentQuestion: 0,
     answers: {},
-    doubtfulQuestions: new Set(),
     timeRemaining: currentSubtest?.duration * 60 || 0,
     isCompleted: false
   })
@@ -200,21 +199,6 @@ const ExamLayout = () => {
     }
   }
 
-  const handleDoubtful = () => {
-    const questionKey = `${examState.currentSubtest}-${examState.currentQuestion}`
-    setExamState(prev => {
-      const newDoubtfulQuestions = new Set(prev.doubtfulQuestions)
-      if (newDoubtfulQuestions.has(parseInt(questionKey))) {
-        newDoubtfulQuestions.delete(parseInt(questionKey))
-      } else {
-        newDoubtfulQuestions.add(parseInt(questionKey))
-      }
-      return {
-        ...prev,
-        doubtfulQuestions: newDoubtfulQuestions
-      }
-    })
-  }
 
   const handleSubmitSubtest = async () => {
     try {
@@ -429,7 +413,7 @@ const ExamLayout = () => {
             questions={questions}
             currentQuestion={examState.currentQuestion}
             answers={examState.answers}
-            doubtfulQuestions={examState.doubtfulQuestions}
+            doubtfulQuestions={new Set()}
             subtestIndex={examState.currentSubtest}
             onQuestionSelect={handleQuestionNavigation}
           />
@@ -449,13 +433,6 @@ const ExamLayout = () => {
               disabled={examState.currentQuestion === 0}
             >
               Previous
-            </button>
-
-            <button
-              className="nav-btn doubtful"
-              onClick={handleDoubtful}
-            >
-              Ragu-ragu
             </button>
 
             <button

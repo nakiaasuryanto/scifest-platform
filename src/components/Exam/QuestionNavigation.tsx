@@ -20,12 +20,10 @@ const QuestionNavigation = ({
   const getQuestionStatus = (questionIndex: number): string => {
     const questionKey = `${subtestIndex}-${questionIndex}`
     const isAnswered = answers[questionKey] !== undefined
-    const isDoubtful = doubtfulQuestions.has(parseInt(questionKey))
     const isCurrent = questionIndex === currentQuestion
 
     if (isCurrent) return 'current'
-    if (isAnswered && !isDoubtful) return 'answered'
-    if (isDoubtful) return 'doubtful'
+    if (isAnswered) return 'answered'
     return 'unanswered'
   }
 

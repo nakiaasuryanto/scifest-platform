@@ -46,7 +46,6 @@ export interface ExamState {
   currentSubtest: number
   currentQuestion: number
   answers: { [key: string]: number }
-  doubtfulQuestions: Set<number>
   timeRemaining: number
   isCompleted: boolean
 }
