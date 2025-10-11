@@ -4,7 +4,6 @@ interface QuestionNavigationProps {
   questions: Question[]
   currentQuestion: number
   answers: { [key: string]: number }
-  doubtfulQuestions: Set<number>
   subtestIndex: number
   onQuestionSelect: (questionIndex: number) => void
 }
@@ -13,7 +12,6 @@ const QuestionNavigation = ({
   questions,
   currentQuestion,
   answers,
-  doubtfulQuestions,
   subtestIndex,
   onQuestionSelect
 }: QuestionNavigationProps) => {

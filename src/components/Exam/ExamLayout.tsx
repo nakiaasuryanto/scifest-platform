@@ -413,7 +413,6 @@ const ExamLayout = () => {
             questions={questions}
             currentQuestion={examState.currentQuestion}
             answers={examState.answers}
-            doubtfulQuestions={new Set()}
             subtestIndex={examState.currentSubtest}
             onQuestionSelect={handleQuestionNavigation}
           />
