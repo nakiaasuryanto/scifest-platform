@@ -54,10 +54,6 @@ const QuestionNavigation = ({
           <span>Sudah Dijawab</span>
         </div>
         <div className="legend-item">
-          <div className="legend-color doubtful"></div>
-          <span>Ragu-ragu</span>
-        </div>
-        <div className="legend-item">
           <div className="legend-color unanswered"></div>
           <span>Belum Dijawab</span>
         </div>
